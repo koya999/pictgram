@@ -44,4 +44,9 @@ class ImageUploader < CarrierWave::Uploader::Base
   # def filename
   #   "something.jpg" if original_filename
   # end
+  
+   # アップロード可能な拡張子のリスト
+  def extension_white_list
+    %w(jpg jpeg png)
+  end
 end
