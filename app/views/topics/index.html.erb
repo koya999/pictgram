@@ -24,6 +24,12 @@
             <p class="topic-text">
               <%= topic.description %>
             </p>
+            <h1 class = "comment-author">コメント</h1>
+             <% topic.comments.each do |comment| %>
+               <p>
+                 <%= comment.content %>
+               </p>
+             <% end %>
           </div>
         </div>
       </div>
