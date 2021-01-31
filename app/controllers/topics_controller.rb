@@ -1,7 +1,7 @@
 class TopicsController < ApplicationController
   
   def index
-    @topics = Topic.all
+    @topics = Topic.all.includes(:favorite_users)
   end
   
   def new
@@ -9,7 +9,8 @@ class TopicsController < ApplicationController
   end
   
   def create
-     @topic = Topic.new(topic_params.merge(user_id: current_user.id))
+    # @topic = Topic.new(topic_params.merge(user_id: current_user.id))
+    @topic = current_user.topics.new(topic_params)
      
     if @topic.save
       redirect_to topics_path, success: '投稿に成功しました'
@@ -23,4 +24,5 @@ class TopicsController < ApplicationController
   def topic_params
     params.require(:topic).permit(:image, :description)
   end
+  
 end
