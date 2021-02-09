@@ -1,15 +1,17 @@
 class CommentsController < ApplicationController
-  
   def new
     @comment = Comment.new
-    @topic = Topic.find(params[:topic_id])
+    @comment.topic_id = params[:topic_id]
+    @comment.user_id = current_user.id
+    respond_to do |format|
+      format.html
+    end 
   end
   
  def create
     @comment =Comment.new(comment_params)
-    @comment.user_id = current_user.id
 
-    if comment.save
+    if @comment.save
       redirect_to topics_path, success: 'コメントを登録しました'
     else
       redirect_to topics_path, danger: 'コメントの登録に失敗しました'
@@ -18,6 +20,6 @@ class CommentsController < ApplicationController
  
  private
  def comment_params
-   params.require(:comment).permit(:content, :topic_id)
+   params.require(:comment).permit(:content, :topic_id, :user_id)
  end 
-end 
+end
